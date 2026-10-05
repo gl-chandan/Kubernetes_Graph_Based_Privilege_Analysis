@@ -1,0 +1,13 @@
+cluster,method,flagged,entries
+k3s (real),Flat review (can-i),4,21
+k3s (real),Single-step lint,7,21
+k3s (real),Graph (this work),9,21
+planted-S,Flat review (can-i),2,54
+planted-S,Single-step lint,6,54
+planted-S,Graph (this work),12,54
+planted-M,Flat review (can-i),6,189
+planted-M,Single-step lint,20,189
+planted-M,Graph (this work),60,189
+planted-L,Flat review (can-i),10,549
+planted-L,Single-step lint,40,549
+planted-L,Graph (this work),120,549

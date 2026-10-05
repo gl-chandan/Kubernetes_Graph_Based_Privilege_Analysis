@@ -1,0 +1,41 @@
+"""
+primitives.py  --  Stage 3: model the escalation primitives (objective O1).
+
+Each primitive turns a *permission* a subject holds into a directed edge
+"subject --primitive--> something it can now become / control".
+COST is the difficulty of performing that step (lower = easier); a path's
+exploitability is derived from the sum of its step costs (see paths.py).
+
+  primitive             permission(s) required                         edge goes to
+  -------------------   --------------------------------------------   -------------------
+  HOLDS_ADMIN           '*' on '*' cluster-wide                        TARGET
+  BIND_CLUSTER_ROLE     create clusterrolebindings + bind clusterroles TARGET
+  ESCALATE_ROLE         escalate + update|patch on clusterroles        TARGET
+  IMPERSONATE           impersonate groups|users|serviceaccounts       TARGET / subject
+  READ_SECRET           get|list secrets in ns                         every SA in ns
+  TOKEN_REQUEST         create serviceaccounts/token in ns             every SA in ns
+  POD_EXEC              create pods/exec in ns                         every pod in ns
+  CREATE_WORKLOAD       create pods (or patch deployments...) in ns    every SA in ns (mount its token)
+  NS_BIND               create rolebindings + bind roles in ns         every SA in ns (grant self ns-admin, read tokens)
+  CREATE_PRIVILEGED_POD create workload in ns whose PSA is 'privileged' TARGET (container escape -> node creds)
+  TOKEN_MOUNT           (pod spec) pod runs as SA with automount on    the pod's SA
+  POD_ESCAPE            (pod spec) privileged / hostPID / hostPath     TARGET
+"""
+
+"""
+synthetic.py  --  Synthetic clusters with *planted* escalation chains (validation, scope item 4).
+
+Output is raw Kubernetes-style objects (same format as `kubectl get -o json`), so the
+analyser sees them exactly like a real snapshot.
+
+A chain of length n is  sa_0 -> sa_1 -> ... -> sa_{n-1} -> cluster-admin.
+Hop i (sa_i -> sa_{i+1}) is a RoleBinding in sa_{i+1}'s namespace granting sa_i ONE
+primitive there; hop types rotate through HOP_KINDS. The final SA is given one of the
+TERMINAL_KINDS. Every chain namespace enforces Pod Security 'restricted', so the
+only way forward is the planted chain itself.
+
+Negative controls ("decoys") look dangerous in isolation but do NOT lead to admin:
+half-a-primitive (bind without create-CRB, escalate without update), a pod-creator in a
+restricted namespace with nothing to steal, impersonation limited to a non-existent user.
+Noise namespaces add ordinary SAs/pods/roles so the analyser has something to sift through.
+"""

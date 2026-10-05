@@ -1,0 +1,342 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "rbac.authorization.k8s.io/v1",
+            "kind": "Role",
+            "metadata": {
+                "annotations": {
+                    "rbac.authorization.kubernetes.io/autoupdate": "true"
+                },
+                "creationTimestamp": "2026-09-02T10:22:26Z",
+                "labels": {
+                    "kubernetes.io/bootstrapping": "rbac-defaults"
+                },
+                "name": "system:controller:bootstrap-signer",
+                "namespace": "kube-public",
+                "resourceVersion": "199",
+                "uid": "bd41f581-5d27-4e57-8ecd-70ddc771fda3"
+            },
+            "rules": [
+                {
+                    "apiGroups": [
+                        ""
+                    ],
+                    "resources": [
+                        "configmaps"
+                    ],
+                    "verbs": [
+                        "get",
+                        "list",
+                        "watch"
+                    ]
+                },
+                {
+                    "apiGroups": [
+                        ""
+                    ],
+                    "resourceNames": [
+                        "cluster-info"
+                    ],
+                    "resources": [
+                        "configmaps"
+                    ],
+                    "verbs": [
+                        "update"
+                    ]
+                },
+                {
+                    "apiGroups": [
+                        "",
+                        "events.k8s.io"
+                    ],
+                    "resources": [
+                        "events"
+                    ],
+                    "verbs": [
+                        "create",
+                        "patch",
+                        "update"
+                    ]
+                }
+            ]
+        },
+        {
+            "apiVersion": "rbac.authorization.k8s.io/v1",
+            "kind": "Role",
+            "metadata": {
+                "annotations": {
+                    "rbac.authorization.kubernetes.io/autoupdate": "true"
+                },
+                "creationTimestamp": "2026-09-02T10:22:25Z",
+                "labels": {
+                    "kubernetes.io/bootstrapping": "rbac-defaults"
+                },
+                "name": "extension-apiserver-authentication-reader",
+                "namespace": "kube-system",
+                "resourceVersion": "193",
+                "uid": "435a85db-57ba-4637-b63e-ad98cc6fc4e0"
+            },
+            "rules": [
+                {
+                    "apiGroups": [
+                        ""
+                    ],
+                    "resourceNames": [
+                        "extension-apiserver-authentication"
+                    ],
+                    "resources": [
+                        "configmaps"
+                    ],
+                    "verbs": [
+                        "get",
+                        "list",
+                        "watch"
+                    ]
+                }
+            ]
+        },
+        {
+            "apiVersion": "rbac.authorization.k8s.io/v1",
+            "kind": "Role",
+            "metadata": {
+                "annotations": {
+                    "rbac.authorization.kubernetes.io/autoupdate": "true"
+                },
+                "creationTimestamp": "2026-09-02T10:22:26Z",
+                "labels": {
+                    "kubernetes.io/bootstrapping": "rbac-defaults"
+                },
+                "name": "system::leader-locking-kube-controller-manager",
+                "namespace": "kube-system",
+                "resourceVersion": "197",
+                "uid": "293fb4cc-0867-4400-b419-6f2d5f0ac244"
+            },
+            "rules": [
+                {
+                    "apiGroups": [
+                        "coordination.k8s.io"
+                    ],
+                    "resources": [
+                        "leases"
+                    ],
+                    "verbs": [
+                        "create",
+                        "get",
+                        "list",
+                        "update",
+                        "watch"
+                    ]
+                },
+                {
+                    "apiGroups": [
+                        "coordination.k8s.io"
+                    ],
+                    "resources": [
+                        "leasecandidates"
+                    ],
+                    "verbs": [
+                        "create",
+                        "get",
+                        "list",
+                        "update",
+                        "watch"
+                    ]
+                }
+            ]
+        },
+        {
+            "apiVersion": "rbac.authorization.k8s.io/v1",
+            "kind": "Role",
+            "metadata": {
+                "annotations": {
+                    "rbac.authorization.kubernetes.io/autoupdate": "true"
+                },
+                "creationTimestamp": "2026-09-02T10:22:26Z",
+                "labels": {
+                    "kubernetes.io/bootstrapping": "rbac-defaults"
+                },
+                "name": "system::leader-locking-kube-scheduler",
+                "namespace": "kube-system",
+                "resourceVersion": "198",
+                "uid": "4cc4827f-47a8-4fc4-8f78-7f58c9ce7c4c"
+            },
+            "rules": [
+                {
+                    "apiGroups": [
+                        "coordination.k8s.io"
+                    ],
+                    "resources": [
+                        "leases"
+                    ],
+                    "verbs": [
+                        "create",
+                        "get",
+                        "list",
+                        "update",
+                        "watch"
+                    ]
+                },
+                {
+                    "apiGroups": [
+                        "coordination.k8s.io"
+                    ],
+                    "resources": [
+                        "leasecandidates"
+                    ],
+                    "verbs": [
+                        "create",
+                        "get",
+                        "list",
+                        "update",
+                        "watch"
+                    ]
+                }
+            ]
+        },
+        {
+            "apiVersion": "rbac.authorization.k8s.io/v1",
+            "kind": "Role",
+            "metadata": {
+                "annotations": {
+                    "rbac.authorization.kubernetes.io/autoupdate": "true"
+                },
+                "creationTimestamp": "2026-09-02T10:22:26Z",
+                "labels": {
+                    "kubernetes.io/bootstrapping": "rbac-defaults"
+                },
+                "name": "system:controller:bootstrap-signer",
+                "namespace": "kube-system",
+                "resourceVersion": "194",
+                "uid": "19fb17de-714d-4816-865d-6342ac1cad48"
+            },
+            "rules": [
+                {
+                    "apiGroups": [
+                        ""
+                    ],
+                    "resources": [
+                        "secrets"
+                    ],
+                    "verbs": [
+                        "get",
+                        "list",
+                        "watch"
+                    ]
+                }
+            ]
+        },
+        {
+            "apiVersion": "rbac.authorization.k8s.io/v1",
+            "kind": "Role",
+            "metadata": {
+                "annotations": {
+                    "rbac.authorization.kubernetes.io/autoupdate": "true"
+                },
+                "creationTimestamp": "2026-09-02T10:22:26Z",
+                "labels": {
+                    "kubernetes.io/bootstrapping": "rbac-defaults"
+                },
+                "name": "system:controller:cloud-provider",
+                "namespace": "kube-system",
+                "resourceVersion": "195",
+                "uid": "a4b0f9b4-db70-419a-bc9a-e08a9a010a7f"
+            },
+            "rules": [
+                {
+                    "apiGroups": [
+                        ""
+                    ],
+                    "resources": [
+                        "configmaps"
+                    ],
+                    "verbs": [
+                        "create",
+                        "get",
+                        "list",
+                        "watch"
+                    ]
+                }
+            ]
+        },
+        {
+            "apiVersion": "rbac.authorization.k8s.io/v1",
+            "kind": "Role",
+            "metadata": {
+                "annotations": {
+                    "rbac.authorization.kubernetes.io/autoupdate": "true"
+                },
+                "creationTimestamp": "2026-09-02T10:22:26Z",
+                "labels": {
+                    "kubernetes.io/bootstrapping": "rbac-defaults"
+                },
+                "name": "system:controller:token-cleaner",
+                "namespace": "kube-system",
+                "resourceVersion": "196",
+                "uid": "459b3282-2f7d-433e-83cb-66f19005b551"
+            },
+            "rules": [
+                {
+                    "apiGroups": [
+                        ""
+                    ],
+                    "resources": [
+                        "secrets"
+                    ],
+                    "verbs": [
+                        "delete",
+                        "get",
+                        "list",
+                        "watch"
+                    ]
+                },
+                {
+                    "apiGroups": [
+                        "",
+                        "events.k8s.io"
+                    ],
+                    "resources": [
+                        "events"
+                    ],
+                    "verbs": [
+                        "create",
+                        "patch",
+                        "update"
+                    ]
+                }
+            ]
+        },
+        {
+            "apiVersion": "rbac.authorization.k8s.io/v1",
+            "kind": "Role",
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"kind\":\"Role\",\"metadata\":{\"annotations\":{},\"name\":\"pod-reader\",\"namespace\":\"review1\"},\"rules\":[{\"apiGroups\":[\"\"],\"resources\":[\"pods\"],\"verbs\":[\"get\",\"list\"]}]}\n"
+                },
+                "creationTimestamp": "2026-09-02T10:28:48Z",
+                "name": "pod-reader",
+                "namespace": "review1",
+                "resourceVersion": "909",
+                "uid": "0e2de368-59f4-4cf0-a6b9-3eac358b232b"
+            },
+            "rules": [
+                {
+                    "apiGroups": [
+                        ""
+                    ],
+                    "resources": [
+                        "pods"
+                    ],
+                    "verbs": [
+                        "get",
+                        "list"
+                    ]
+                }
+            ]
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

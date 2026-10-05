@@ -1,0 +1,16 @@
+method,chain_length,flagged,false_positives,decoys_flagged
+Flat review (can-i),1,4,0,0
+Single-step lint,1,16,0,0
+Graph (this work),1,16,0,0
+Flat review (can-i),2,4,0,0
+Single-step lint,2,16,0,0
+Graph (this work),2,32,0,0
+Flat review (can-i),3,4,0,0
+Single-step lint,3,16,0,0
+Graph (this work),3,48,0,0
+Flat review (can-i),4,4,0,0
+Single-step lint,4,16,0,0
+Graph (this work),4,64,0,0
+Flat review (can-i),5,4,0,0
+Single-step lint,5,16,0,0
+Graph (this work),5,80,0,0

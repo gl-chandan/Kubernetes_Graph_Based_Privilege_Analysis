@@ -1,0 +1,15 @@
+cluster,max_hops,flagged,paths
+k3s (real),1,4,4
+k3s (real),2,8,45
+k3s (real),3,9,586
+k3s (real),4,9,6361
+k3s (real),5,9,10004
+k3s (real),6,9,10004
+k3s (real),7,9,10004
+planted-M,1,10,10
+planted-M,2,26,26
+planted-M,3,38,38
+planted-M,4,48,48
+planted-M,5,55,55
+planted-M,6,59,59
+planted-M,7,60,60

@@ -1,0 +1,72 @@
+
+=== Exp 1: real k3s snapshot ===
+Graph: 235 nodes {'target': 1, 'subject': 70, 'role': 85, 'binding': 72, 'pod': 7}, 1341 edges
+Escalation edges by primitive: {'ESCALATE_ROLE': 1, 'CREATE_WORKLOAD': 571, 'CREATE_PRIVILEGED_POD': 11, 'READ_SECRET': 390, 'HOLDS_ADMIN': 3, 'IMPERSONATE': 190, 'POD_EXEC': 21, 'TOKEN_MOUNT': 6}
+Entry points: 21   paths (<= 4 hops): 7423
+Entry points flagged  flat=4  single-step=7  graph=9
+Top 10 paths:
+  cost=0 hops=1  ServiceAccount kube-system/helm-traefik  --[HOLDS_ADMIN]-->  CLUSTER-ADMIN
+  cost=0 hops=1  ServiceAccount kube-system/helm-traefik-crd  --[HOLDS_ADMIN]-->  CLUSTER-ADMIN
+  cost=1 hops=2  Pod kube-system/helm-install-traefik-crd-slmdl  --[TOKEN_MOUNT]-->  ServiceAccount kube-system/helm-traefik-crd  --[HOLDS_ADMIN]-->  CLUSTER-ADMIN
+  cost=1 hops=2  Pod kube-system/helm-install-traefik-tmvdw  --[TOKEN_MOUNT]-->  ServiceAccount kube-system/helm-traefik  --[HOLDS_ADMIN]-->  CLUSTER-ADMIN
+  cost=1 hops=2  ServiceAccount kube-system/traefik  --[READ_SECRET]-->  ServiceAccount kube-system/helm-traefik  --[HOLDS_ADMIN]-->  CLUSTER-ADMIN
+  cost=1 hops=2  ServiceAccount kube-system/traefik  --[READ_SECRET]-->  ServiceAccount kube-system/helm-traefik-crd  --[HOLDS_ADMIN]-->  CLUSTER-ADMIN
+  cost=2 hops=2  ServiceAccount kube-system/local-path-provisioner-service-account  --[CREATE_WORKLOAD]-->  ServiceAccount kube-system/helm-traefik  --[HOLDS_ADMIN]-->  CLUSTER-ADMIN
+  cost=2 hops=2  ServiceAccount kube-system/local-path-provisioner-service-account  --[CREATE_WORKLOAD]-->  ServiceAccount kube-system/helm-traefik-crd  --[HOLDS_ADMIN]-->  CLUSTER-ADMIN
+  cost=2 hops=2  ServiceAccount kube-system/traefik  --[READ_SECRET]-->  ServiceAccount kube-system/clusterrole-aggregation-controller  --[ESCALATE_ROLE]-->  CLUSTER-ADMIN
+  cost=2 hops=2  User k3s-cloud-controller-manager  --[CREATE_WORKLOAD]-->  ServiceAccount kube-system/helm-traefik  --[HOLDS_ADMIN]-->  CLUSTER-ADMIN
+
+=== Exp 2: validation on planted chains ===
+method        Flat review (can-i)  Graph (this work)  Single-step lint
+chain_length                                                          
+1                            0.25                1.0               1.0
+2                            0.00                1.0               0.0
+3                            0.00                1.0               0.0
+4                            0.00                1.0               0.0
+5                            0.00                1.0               0.0
+graph: found 40/40 planted chains; false positives 0 / flagged 240; decoys flagged 0
+
+=== Exp 3: baseline vs graph (same clusters) ===
+k3s (real)   entries= 21  Flat=4  Single-step=7  Graph=9
+planted-S    entries= 54  Flat=2  Single-step=6  Graph=12
+planted-M    entries=189  Flat=6  Single-step=20  Graph=60
+planted-L    entries=549  Flat=10  Single-step=40  Graph=120
+
+=== Exp 4a: max_hops sweep ===
+cluster   k3s (real)  planted-M
+max_hops                       
+1                  4         10
+2                  8         26
+3                  9         38
+4                  9         48
+5                  9         55
+6                  9         59
+7                  9         60
+
+=== Exp 4b: leave-one-primitive-out ablation ===
+              removed  recall_planted  k3s_flagged  k3s_paths
+  (none - full model)             1.0            9       7423
+    BIND_CLUSTER_ROLE             0.7            9       7423
+CREATE_PRIVILEGED_POD             1.0            9       1954
+      CREATE_WORKLOAD             0.6            9        413
+        ESCALATE_ROLE             0.8            9       6773
+          HOLDS_ADMIN             1.0            9      16545
+          IMPERSONATE             0.8            9       7423
+              NS_BIND             0.6            9       7423
+           POD_ESCAPE             1.0            9       7423
+             POD_EXEC             0.6            9       7423
+          READ_SECRET             0.6            7       2072
+          TOKEN_MOUNT             0.6            5       7064
+        TOKEN_REQUEST             0.6            9       7423
+
+=== Exp 5: runtime vs cluster size ===
+ subjects  graph_nodes  graph_edges  build_s  enumerate_s  graph_total_s  baseline_s  paths
+       86          217          604   0.0109       0.0041         0.0150      0.0005     60
+      146          373         1072   0.0155       0.0050         0.0205      0.0010     60
+      271          698         2047   0.0318       0.0078         0.0396      0.0023     60
+      521         1348         3997   0.0588       0.0114         0.0701      0.0045     60
+     1021         2648         7897   0.1848       0.0234         0.2082      0.0125     60
+     2021         5248        15697   0.2584       0.0269         0.2853      0.0164     60
+     4021        10448        31297   0.4891       0.0532         0.5423      0.0337     60
+
+Done. Figures and CSVs are in results/
